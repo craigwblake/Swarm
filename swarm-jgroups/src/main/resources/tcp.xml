@@ -1,0 +1,43 @@
+<config>
+
+    <!-- Transport for messaging - all messages use this protocol. -->
+    <TCP bind_addr="localhost" bind_port="7800"/>
+
+    <!-- Discovery protocol. -->
+    <TCPPING initial_hosts="localhost[7800]" port_range="3" timeout="3000" num_initial_members="1"/>
+
+    <!-- Merges sub-clusters back together after a split. -->
+    <MERGE2 max_interval="30000" min_interval="10000"/>
+
+    <!-- Failure detection based on sockets. -->
+    <FD_SOCK/>
+
+    <!-- Failure detection based on heartbeat. -->
+    <FD timeout="100" max_tries="1"/>
+
+    <!-- Double-checks suspected failures. -->
+    <VERIFY_SUSPECT timeout="1500"/>
+
+    <pbcast.NAKACK
+        use_mcast_xmit="false"
+        retransmit_timeout="300"
+        discard_delivered_msgs="true"/>
+
+    <UNICAST
+        timeout="300"/>
+
+    <RSVP
+        ack_on_delivery="true"
+        resend_interval="0"
+        timeout="500"
+        throw_exception_on_timeout="true"/>
+    
+    <UFC/>
+
+    <pbcast.STABLE stability_delay="1000" desired_avg_gossip="50000" max_bytes="400000"/>
+
+    <pbcast.GMS print_local_addr="true" join_timeout="3000" view_bundling="true"/>
+
+    <FRAG2 frag_size="30000"/>
+
+</config>
